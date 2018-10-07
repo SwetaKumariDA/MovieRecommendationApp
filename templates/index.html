@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Movie recommendation website</title>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$.ajax({
+				url: '{{ url_for("autocomplete") }}'
+				}).done(function (data) {
+					$('#fname').autocomplete({
+						source: data,
+						minLength: 2
+					});
+				});
+			});
+	</script>
+</head>
+
+<body>
+<div class="container">
+<h2>Welcome to movie recommendation engine</h2>
+<form action="/getreco" method="POST">
+<div class="form-group row">
+<div class="col-xs-4">
+  <label for="email">Movie name:</label>
+  <input type="text" name="fname" id="fname" placeholder="Enter movie name" class="form-control"><br>
+ </div>
+ </div>
+  <input type="submit" class="btn btn-default" value="Submit">
+</form>
+</div>
+<div class="container">
+<output name="op1"><h2>{{rec}}</h2></output>
+<output name="out">
+<ul>
+{%for movie in out%}
+<li>{{ movie }}</li>
+{%endfor%}
+</ul>
+</output>
+<div>
+</body>
+</html>
